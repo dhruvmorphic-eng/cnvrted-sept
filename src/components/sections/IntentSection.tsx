@@ -1,26 +1,68 @@
-import LeadsTable from "@/components/LeadsTable";
-import { sampleLeads } from "@/components/leads-sample-data";
-import { ToolsMarquee } from "@/components/sections/ToolsMarquee";
+"use client";
 
-export function IntentSection() {
+import { motion, useTransform, type MotionValue } from "framer-motion";
+import { ShimmerText } from "@/components/ui/ShimmerText";
+import { LeadsExplorer } from "@/components/sections/LeadsExplorer";
+import { IntegrationsGrid } from "@/components/sections/IntegrationsGrid";
+import { EnrichmentPipeline } from "@/components/sections/EnrichmentPipeline";
+
+export function IntentSection({
+  scrollYProgress,
+}: {
+  scrollYProgress: MotionValue<number>;
+}) {
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [5, 0]);
+
   return (
-    <section className="flex min-h-screen items-start bg-white px-6 pt-16 pb-16 md:px-12">
-      <div className="w-full">
-        <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,320px)_1fr]">
-          <div>
-            <h2 className="font-heading text-3xl font-medium tracking-tight text-black md:text-4xl">
-              What is intent?
+    <motion.section
+      style={{ scale, rotate }}
+      className="relative flex min-h-screen items-center overflow-hidden bg-white px-6 py-20 md:px-12"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_100%_100%_at_50%_50%,black_0%,rgba(0,0,0,0.5)_40%,transparent_85%)]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(0,0,0,0.18) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      <div className="relative grid w-full min-w-0 items-start gap-x-10 gap-y-8 lg:grid-cols-[minmax(0,380px)_1fr]">
+        {/* left: heading + copy, integrations below */}
+        <div className="flex min-w-0 flex-col gap-8">
+          <div className="max-w-md">
+            <h2 className="font-heading text-4xl font-extrabold tracking-tight text-black md:text-5xl">
+              {"What is Intent"}
+              <ShimmerText
+                className="relative top-[0.14em] align-baseline"
+                duration={1.2}
+                delay={1}
+              >
+                ?
+              </ShimmerText>
             </h2>
-            <p className="mt-4 max-w-xl text-base text-black/60">
-              Intent is the signal that a company is actively researching a solution like yours, right now.
+            <p className="mt-5 font-heading text-lg font-semibold leading-snug">
+              <span className="text-black/40">
+                Intent isn&apos;t a score.
+              </span>{" "}
+              <span className="text-black">
+                It&apos;s a person telling you, in public, that they&apos;re{" "}
+                <span className="rounded-sm bg-black px-1 text-white">
+                  ready to buy
+                </span>{" "}
+                — before they ever say it to you.
+              </span>
             </p>
           </div>
-          <LeadsTable leads={sampleLeads} activeTab="Intent Leads" />
+          <IntegrationsGrid />
         </div>
-        <div className="max-w-[320px]">
-          <ToolsMarquee />
+
+        {/* right: leads explorer, enrichment pipeline below */}
+        <div className="flex min-w-0 flex-col items-center gap-8 lg:items-end">
+          <LeadsExplorer />
+          <EnrichmentPipeline />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

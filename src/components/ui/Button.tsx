@@ -14,7 +14,7 @@ export function Button({
   className?: string;
 }) {
   const base =
-    "inline-flex h-10 items-center justify-center rounded-md px-5 text-sm font-medium transition-colors duration-100 disabled:opacity-50";
+    "inline-flex h-9 items-center justify-center rounded-full px-4 text-sm font-medium transition-colors duration-100 disabled:opacity-50";
   const variants = {
     primary: "bg-primary text-primary-foreground hover:bg-primary/90",
     secondary: "bg-secondary text-secondary-foreground hover:bg-accent",

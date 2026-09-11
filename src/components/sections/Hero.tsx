@@ -1,11 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useTransform, type MotionValue } from "framer-motion";
 import { BookCalBar } from "@/components/BookCalBar";
 
-export function Hero() {
+export function Hero({
+  scrollYProgress,
+}: {
+  scrollYProgress: MotionValue<number>;
+}) {
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
+  const rotate = useTransform(scrollYProgress, [0, 1], [0, -5]);
+
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden bg-background px-6">
+    <motion.section
+      style={{ scale, rotate }}
+      className="sticky top-0 flex h-screen items-center overflow-hidden bg-background px-6"
+    >
       <div
         className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_100%_100%_at_50%_50%,black_0%,rgba(0,0,0,0.5)_40%,transparent_85%)]"
         style={{
@@ -14,14 +24,17 @@ export function Hero() {
           backgroundSize: "24px 24px",
         }}
       />
-      <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="font-heading text-5xl font-normal tracking-tighter text-foreground md:text-6xl"
+          className="font-heading text-[clamp(1.375rem,6.5vw,4.25rem)] font-bold leading-[1.15] tracking-tighter text-foreground"
         >
-          Find high-intent leads matching your ICP, precisely
+          <span className="block text-foreground">Find high-intent leads</span>
+          <span className="block text-foreground/40">
+            matching your ICP, precisely
+          </span>
         </motion.h1>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -32,6 +45,6 @@ export function Hero() {
           <BookCalBar />
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
