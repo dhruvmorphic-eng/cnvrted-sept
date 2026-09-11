@@ -5,6 +5,7 @@ import { ShimmerText } from "@/components/ui/ShimmerText";
 import { LeadsExplorer } from "@/components/sections/LeadsExplorer";
 import { IntegrationsGrid } from "@/components/sections/IntegrationsGrid";
 import { EnrichmentPipeline } from "@/components/sections/EnrichmentPipeline";
+import { HandWrittenTitle } from "@/components/ui/HandWrittenTitle";
 
 export function IntentSection({
   scrollYProgress,
@@ -55,12 +56,17 @@ export function IntentSection({
             </p>
           </div>
           <IntegrationsGrid />
+          <HandWrittenTitle title="Qualified Intent Lead" className="lg:hidden" />
         </div>
 
         {/* right: leads explorer, enrichment pipeline below */}
         <div className="flex min-w-0 flex-col items-center gap-8 lg:items-end">
           <LeadsExplorer />
           <EnrichmentPipeline />
+        </div>
+
+        <div className="pointer-events-none absolute top-[62%] left-1/2 hidden -translate-x-1/2 -translate-y-1/2 lg:block">
+          <HandWrittenTitle title="Qualified Intent Lead" />
         </div>
       </div>
     </motion.section>
